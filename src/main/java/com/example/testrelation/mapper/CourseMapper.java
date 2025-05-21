@@ -2,14 +2,12 @@ package com.example.testrelation.mapper;
 
 import com.example.testrelation.dto.CourseDTO;
 import com.example.testrelation.entity.CourseEntity;
+import com.example.testrelation.mapper.simpleMapper.StudentSimpleMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring") // để Spring quản lý bean
+@Mapper(componentModel = "spring", uses = {StudentSimpleMapper.class})
 public interface CourseMapper {
-
-    CourseMapper INSTANCE = Mappers.getMapper(CourseMapper.class);
     @Mapping(source = "title", target = "name")
-    CourseDTO toDTO(CourseEntity course);
+    CourseDTO toDTO(CourseEntity entity);
 }

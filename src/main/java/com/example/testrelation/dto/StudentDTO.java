@@ -1,5 +1,6 @@
 package com.example.testrelation.dto;
 
+import com.example.testrelation.dto.simpleDTO.CourseSimpleDTO;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,5 @@ public class StudentDTO {
     private Long id;
     private String name;
     private DepartmentDTO department;
-    private List<CourseDTO> courses;
-    // getters, setters
+    private List<CourseSimpleDTO> courses;
 }
