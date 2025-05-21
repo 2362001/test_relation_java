@@ -31,8 +31,6 @@ public class StudentEntity {
     //    FROM student s
     //    LEFT JOIN department d ON s.department_id = d.id;
 
-
-
     // Quan hệ ManyToMany với Course
     @ManyToMany
     @JoinTable(
