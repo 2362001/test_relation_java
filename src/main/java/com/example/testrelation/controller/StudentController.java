@@ -1,5 +1,7 @@
-package com.example.testrelation;
+package com.example.testrelation.controller;
 
+import com.example.testrelation.dto.StudentDTO;
+import com.example.testrelation.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +13,10 @@ import java.util.List;
 @RequestMapping("/students")
 @RequiredArgsConstructor
 public class StudentController {
-
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
 
     @GetMapping
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentDTO> getAllStudents() {
+        return studentService.getAllStudents();
     }
 }

@@ -1,10 +1,10 @@
-package com.example.testrelation;
+package com.example.testrelation.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,17 +15,19 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Department {
+public class CourseEntity {
     @Id
     @GeneratedValue
     private Long id;
-    private String name;
+    private String title;
 
-    @OneToMany(mappedBy = "department")
+    @ManyToMany(mappedBy = "courses")
     @JsonIgnore
-    private List<Student> students;
+    private List<StudentEntity> students;
 
-    public Department(String name) {
-        this.name = name;
+    // Constructor custom để dễ tạo dữ liệu
+    public CourseEntity(String title) {
+        this.title = title;
     }
+
 }

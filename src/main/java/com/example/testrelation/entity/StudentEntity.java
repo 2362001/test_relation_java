@@ -1,4 +1,4 @@
-package com.example.testrelation;
+package com.example.testrelation.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student {
+public class StudentEntity {
 
     @Id
     @GeneratedValue
@@ -20,10 +20,18 @@ public class Student {
 
     private String name;
 
+
+
     // Quan hệ ManyToOne với Department
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id") // tên cột trong bảng Student
-    private Department department;
+    private DepartmentEntity department;
+    //    sinh ra câu sql như ở dưới
+    //    SELECT s.*, d.*
+    //    FROM student s
+    //    LEFT JOIN department d ON s.department_id = d.id;
+
+
 
     // Quan hệ ManyToMany với Course
     @ManyToMany
@@ -32,10 +40,10 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id"), // FK trỏ đến Student
             inverseJoinColumns = @JoinColumn(name = "course_id") // FK trỏ đến Course
     )
-    private List<Course> courses = new ArrayList<>();
+    private List<CourseEntity> courses = new ArrayList<>();
 
     // Constructor tiện tạo nhanh dữ liệu
-    public Student(String name, Department department) {
+    public StudentEntity(String name, DepartmentEntity department) {
         this.name = name;
         this.department = department;
     }
