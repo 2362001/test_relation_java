@@ -11,7 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.List;
+import java.util.*;
 
 @SpringBootApplication
 public class TestrelationApplication {
@@ -23,22 +23,43 @@ public class TestrelationApplication {
     @Bean
     CommandLineRunner initData(DepartmentRepository departmentRepo, StudentRepository studentRepo, CourseRepository courseRepo) {
         return args -> {
-            DepartmentEntity it = new DepartmentEntity("IT");
-            DepartmentEntity biz = new DepartmentEntity("Business");
-            departmentRepo.saveAll(List.of(it, biz));
+            // Tạo 10 Department
+            List<DepartmentEntity> departments = new ArrayList<>();
+            for (int i = 1; i <= 10; i++) {
+                departments.add(new DepartmentEntity("Department " + i));
+            }
+            departmentRepo.saveAll(departments);
 
-            StudentEntity s1 = new StudentEntity("Alice", it);
-            StudentEntity s2 = new StudentEntity("Bob", biz);
-            studentRepo.saveAll(List.of(s1, s2));
+            // Tạo 10 Course
+            List<CourseEntity> courses = new ArrayList<>();
+            for (int i = 1; i <= 10; i++) {
+                courses.add(new CourseEntity("Course " + i));
+            }
+            courseRepo.saveAll(courses);
 
-            CourseEntity c1 = new CourseEntity("Java");
-            CourseEntity c2 = new CourseEntity("Spring Boot");
-            courseRepo.saveAll(List.of(c1, c2));
+            // Tạo 10 Student, gán Department và Course ngẫu nhiên
+            List<StudentEntity> students = new ArrayList<>();
+            Random rand = new Random();
 
-            // gán khóa học cho sinh viên
-            s1.getCourses().addAll(List.of(c1, c2));
-            s2.getCourses().add(c1);
-            studentRepo.saveAll(List.of(s1, s2));
+            for (int i = 1; i <= 10; i++) {
+                // Lấy department ngẫu nhiên
+                DepartmentEntity randomDept = departments.get(rand.nextInt(departments.size()));
+                StudentEntity student = new StudentEntity("Student " + i, randomDept);
+
+                // Gán khóa học cho student
+                // Ví dụ: mỗi student có 1-5 khóa học ngẫu nhiên
+                int numberOfCourses = 1 + rand.nextInt(5);
+                Set<CourseEntity> assignedCourses = new HashSet<>();
+                for (int j = 0; j < numberOfCourses; j++) {
+                    CourseEntity randomCourse = courses.get(rand.nextInt(courses.size()));
+                    assignedCourses.add(randomCourse);
+                }
+                student.getCourses().addAll(assignedCourses);
+
+                students.add(student);
+            }
+            studentRepo.saveAll(students);
         };
     }
+
 }

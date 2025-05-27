@@ -7,11 +7,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+      format_sql: true            # Định dạng SQL đẹp hơn khi hiển thị
     show-sql: true
   h2:
     console:
       enabled: true
       path: /h2-console
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG         # Hiển thị câu SQL Hibernate sinh ra
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE  # Hiển thị giá trị tham số SQL
 
 server:
   port: 9090
